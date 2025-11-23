@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Linta & Nijo — Wedding Invitation</title>
+
+  <style>
+    :root{--accent:#b02e2e;--muted:#6b6b6b;--bg:#f8f6f3}
+    *{box-sizing:border-box}
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,'Noto Sans',Helvetica,Arial;
+      background:linear-gradient(180deg,#fff 0%,var(--bg) 100%);
+      margin:0;color:#222;line-height:1.5;
+    }
+
+    .container{max-width:920px;margin:36px auto;padding:24px}
+    .card{
+      background:#fff;border-radius:14px;
+      box-shadow:0 8px 30px rgba(20,20,20,0.06);
+      overflow:hidden;padding:28px;
+    }
+
+    .names{font-size:clamp(26px,4vw,40px);font-weight:700;margin:6px 0}
+    .subtitle{color:var(--muted);margin-bottom:18px}
+
+    /* COUNTDOWN */
+    #countdown{
+      font-size:20px;font-weight:600;
+      color:var(--accent);margin:10px 0 25px;
+    }
+
+    .details{
+      display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;
+    }
+    .detail{
+      background:#fbfbfb;padding:12px;border-radius:8px;
+    }
+
+    .btn{
+      display:inline-block;padding:10px 16px;border-radius:10px;
+      background:var(--accent);color:#fff;text-decoration:none;
+      font-weight:600;border:none;cursor:pointer;
+    }
+    .ghost{background:transparent;border:1px solid #ddd;color:#333}
+
+    .section{padding-top:10px}
+    .footer{text-align:center;color:var(--muted);padding:18px;font-size:14px}
+
+    /* Modal */
+    .modal-backdrop{
+      position:fixed;inset:0;background:rgba(0,0,0,0.45);
+      display:none;align-items:center;justify-content:center;padding:18px;
+    }
+    .modal{
+      background:#fff;padding:18px;border-radius:12px;
+      width:100%;max-width:520px;box-shadow:0 10px 40px rgba(0,0,0,0.18);
+    }
+
+    label{display:block;margin:8px 0 6px;font-weight:600}
+    input,textarea,select{
+      width:100%;padding:10px;border-radius:8px;border:1px solid #e3e3e3;
+    }
+
+    @media(max-width:720px){
+      .details{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+
+    <p style="margin:0;color:var(--muted)">With joy in our hearts</p>
+    <h1 class="names">Linta Premkumar &amp; Nijo M. George</h1>
+    <p class="subtitle">Request the pleasure of your company as we exchange vows</p>
+
+    <!-- COUNTDOWN TIMER -->
+    <div id="countdown">Loading countdown...</div>
+
+    <!-- DETAILS -->
+    <div class="details">
+      <div class="detail">
+        <strong>Date &amp; Time</strong>
+        <div>Thursday, 15 January 2026<br>11:00 AM IST</div>
+      </div>
+      <div class="detail">
+        <strong>Venue</strong>
+        <div>St. Thomas Marthoma Church, Vilangara, Kottarakkara</div>
+      </div>
+    </div>
+
+    <!-- UPDATED CONTACT -->
+    <div style="margin-top:14px">
+      <strong>Contact</strong><br>
+      <span style="color:var(--muted)">
+        Roy: 9744836163<br>
+        Nijo: 8921077115<br>
+        Georgekutty: 9495475170
+      </span>
+    </div>
+
+    <div style="margin-top:18px">
+      <button class="btn" id="rsvpBtn">RSVP</button>
+      <button class="btn ghost" id="addCalBtn" style="margin-left:10px">Add to calendar</button>
+      <button class="btn ghost" id="shareBtn" style="margin-left:10px">Share</button>
+    </div>
+
+    <div class="section">
+      <h3>RSVP &amp; Guestbook</h3>
+      <p style="color:var(--muted);margin-top:6px">
+        Let us know if you will attend.
+      </p>
+      <div id="rsvpList"></div>
+    </div>
+
+    <div class="footer">
+      bless us with your presence.
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal-backdrop" aria-hidden="true">
+  <div class="modal">
+    <h2 style="margin-top:0">RSVP</h2>
+
+    <form id="rsvpForm">
+      <label>Your name</label>
+      <input id="guestName" required>
+
+      <label>Email (optional)</label>
+      <input id="email" type="email">
+
+      <label>Will you attend?</label>
+      <select id="attend">
+        <option value="yes">Yes — I will attend</option>
+        <option value="no">No — Sorry</option>
+        <option value="maybe">Maybe</option>
+      </select>
+
+      <label>Message</label>
+      <textarea id="note" rows="3"></textarea>
+
+      <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
+        <button type="button" class="btn ghost" id="cancelBtn">Cancel</button>
+        <button class="btn" type="submit">Send RSVP</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+/* ---------- COUNTDOWN ---------- */
+const countdownEl = document.getElementById("countdown");
+const weddingDate = new Date("2026-01-15T11:00:00+05:30").getTime();
+
+function updateCountdown(){
+  const now = new Date().getTime();
+  const diff = weddingDate - now;
+
+  if(diff <= 0){
+    countdownEl.innerHTML = "Our big day has arrived! ❤️";
+    return;
+  }
+
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff%(1000*60*60*24)) / (1000*60*60));
+  const m = Math.floor((diff%(1000*60*60)) / (1000*60));
+  const s = Math.floor((diff%(1000*60)) / 1000);
+
+  countdownEl.innerHTML = `${d} days ${h} hrs ${m} mins ${s} secs`;
+}
+setInterval(updateCountdown, 1000);
+
+/* ---------- MODAL ---------- */
+const modal = document.getElementById("modal");
+document.getElementById("rsvpBtn").onclick = ()=>{ modal.style.display="flex"; };
+document.getElementById("cancelBtn").onclick = ()=>{ modal.style.display="none"; };
+modal.onclick = (e)=>{ if(e.target===modal) modal.style.display="none"; };
+
+/* ---------- RSVP ---------- */
+const rsvpListEl = document.getElementById("rsvpList");
+function loadRSVP(){ return JSON.parse(localStorage.getItem("rsvps")||"[]"); }
+function saveRSVP(list){ localStorage.setItem("rsvps",JSON.stringify(list)); }
+
+function renderRSVP(){
+  const list = loadRSVP();
+  if(list.length === 0){
+    rsvpListEl.innerHTML = "<p style='color:var(--muted)'>No responses yet.</p>";
+    return;
+  }
+  rsvpListEl.innerHTML = "";
+  list.forEach(r=>{
+    const div=document.createElement("div");
+    div.style.padding="10px";
+    div.style.borderBottom="1px solid #eee";
+    div.innerHTML = `<strong>${r.name}</strong> — ${r.status}<br><span style='color:var(--muted);font-size:13px'>${r.note || ""}</span>`;
+    rsvpListEl.appendChild(div);
+  });
+}
+renderRSVP();
+
+document.getElementById("rsvpForm").onsubmit = (e)=>{
+  e.preventDefault();
+  const entry = {
+    name: guestName.value,
+    email: email.value,
+    status: attend.value,
+    note: note.value
+  };
+  const list = loadRSVP();
+  list.unshift(entry);
+  saveRSVP(list);
+  renderRSVP();
+  modal.style.display="none";
+  alert("RSVP saved!");
+};
+
+/* ---------- SHARE ---------- */
+document.getElementById("shareBtn").onclick = async ()=>{
+  const data = {
+    title: "Wedding Invitation",
+    text: "You're invited to Linta & Nijo's wedding!",
+    url: location.href
+  };
+  if(navigator.share){
+    await navigator.share(data).catch(()=>{});
+  }else{
+    navigator.clipboard.writeText(location.href);
+    alert("Link copied!");
+  }
+};
+</script>
+
+</body>
+</html>
+
