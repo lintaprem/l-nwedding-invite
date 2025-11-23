@@ -3,175 +3,181 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wedding RSVP</title>
-
+<title>Linta & Nijo — Wedding Invitation</title>
 <style>
-    body {
-        font-family: "Poppins", sans-serif;
-        background: #f8f6f2;
-        padding: 20px;
-        text-align: center;
-        color: #333;
-    }
-
-    .card {
-        background: white;
-        padding: 20px;
-        border-radius: 18px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        margin-bottom: 25px;
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    h2 {
-        margin-top: 0;
-        font-weight: 600;
-    }
-
-    #countdown {
-        font-size: 22px;
-        font-weight: 600;
-        color: #8b5e3c;
-        margin-top: 10px;
-    }
-
-    input, select, textarea {
-        width: 90%;
-        padding: 10px;
-        margin-top: 10px;
-        border-radius: 8px;
-        border: 1px solid #bbb;
-    }
-
-    button {
-        padding: 12px 20px;
-        border: none;
-        background: #8b5e3c;
-        color: white;
-        border-radius: 10px;
-        margin-top: 15px;
-        font-size: 16px;
-    }
-
-    #guestList {
-        margin-top: 15px;
-        text-align: left;
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-        background: #fff;
-        padding: 15px;
-        border-radius: 12px;
-        box-shadow: 0px 3px 8px rgba(0,0,0,0.1);
-    }
+:root{--accent:#b02e2e;--muted:#6b6b6b;--bg:#f8f6f3}
+*{box-sizing:border-box}
+body{
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,'Noto Sans',Helvetica,Arial;
+    background:linear-gradient(180deg,#fff 0%,var(--bg) 100%);
+    margin:0;color:#222;line-height:1.5;text-align:center;
+}
+.container{max-width:920px;margin:36px auto;padding:24px}
+.card{
+    background:#fff;border-radius:14px;
+    box-shadow:0 8px 30px rgba(20,20,20,0.06);
+    overflow:hidden;padding:28px;margin-bottom:25px;
+}
+.names{font-size:clamp(26px,4vw,40px);font-weight:700;margin:6px 0}
+.subtitle{color:var(--muted);margin-bottom:18px}
+#countdown{
+    font-size:20px;font-weight:600;
+    color:var(--accent);margin:10px 0 25px;
+}
+.details{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.detail{background:#fbfbfb;padding:12px;border-radius:8px;text-align:left}
+.btn{
+    display:inline-block;padding:10px 16px;border-radius:10px;
+    background:var(--accent);color:#fff;text-decoration:none;
+    font-weight:600;border:none;cursor:pointer;
+}
+.ghost{background:transparent;border:1px solid #ddd;color:#333}
+.section{padding-top:10px}
+.footer{text-align:center;color:var(--muted);padding:18px;font-size:14px}
+input,textarea,select{
+    width:90%;padding:10px;margin-top:10px;border-radius:8px;border:1px solid #bbb;
+    font-size:15px;
+}
+@media(max-width:720px){
+    .details{grid-template-columns:1fr}
+    .card{padding:18px}
+}
+#guestList{text-align:left;margin-top:15px;padding:15px;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,0.1);border-radius:12px;max-width:500px;margin-left:auto;margin-right:auto;}
 </style>
-
 </head>
 <body>
 
-<div class="card">
-    <h2>Linta & Nijo Wedding</h2>
-    <div id="countdown">Loading…</div>
+<div class="container">
+  <div class="card">
+      <p style="margin:0;color:var(--muted)">With joy in our hearts</p>
+      <h1 class="names">Linta Premkumar &amp; Nijo M. George</h1>
+      <p class="subtitle">Request the pleasure of your company as we exchange vows</p>
 
-    <button onclick="addToCalendar()">Add to Google Calendar</button>
+      <div id="countdown">Loading countdown...</div>
+
+      <div class="details">
+        <div class="detail">
+            <strong>Date &amp; Time</strong>
+            <div>Thursday, 15 January 2026<br>11:00 AM IST</div>
+        </div>
+        <div class="detail">
+            <strong>Venue</strong>
+            <div>St. Thomas Marthoma Church, Vilangara, Kottarakkara</div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;text-align:left">
+        <strong>Contact</strong><br>
+        <span style="color:var(--muted)">
+            Roy: 9744836163<br>
+            Nijo: 8921077115<br>
+            Georgekutty: 9495475170
+        </span>
+      </div>
+
+      <div style="margin-top:18px">
+        <button class="btn" id="rsvpBtn">RSVP</button>
+        <button class="btn ghost" id="addCalBtn">Add to Calendar</button>
+        <button class="btn ghost" id="shareBtn">Share</button>
+      </div>
+  </div>
+
+  <div class="card">
+      <h3>RSVP</h3>
+      <input type="text" id="name" placeholder="Your Name">
+      <input type="email" id="email" placeholder="Your Email">
+      <select id="status">
+          <option value="Attending">Attending</option>
+          <option value="Not Attending">Not Attending</option>
+      </select>
+      <textarea id="note" placeholder="Message (Optional)"></textarea>
+      <button onclick="submitRSVP()">Submit RSVP</button>
+  </div>
+
+  <h3>Guests Who Responded</h3>
+  <div id="guestList">Loading...</div>
 </div>
-
-<div class="card">
-    <h3>RSVP</h3>
-    <input type="text" id="name" placeholder="Your Name">
-    <input type="email" id="email" placeholder="Your Email">
-    
-    <select id="status">
-        <option value="Attending">Attending</option>
-        <option value="Not Attending">Not Attending</option>
-    </select>
-
-    <textarea id="note" placeholder="Message (Optional)"></textarea>
-
-    <button onclick="submitRSVP()">Submit RSVP</button>
-</div>
-
-<h3>Guests Who Responded</h3>
-<div id="guestList">Loading…</div>
 
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPocYcNi0Bd1NeS7kbFJFUBBngKyNN133luAq2_XT0fDglpCtNTtjFnJ2b9u00O4_h/exec";
 
-/* ---------------------- COUNTDOWN --------------------- */
-function updateCountdown() {
-    const weddingDate = new Date("2025-01-15T11:00:00+05:30").getTime();
-    const now = new Date().getTime();
+/* ---------- COUNTDOWN ---------- */
+function updateCountdown(){
+    const weddingDate = new Date(2026,0,15,11,0,0); // Jan=0
+    const now = new Date();
     const diff = weddingDate - now;
 
-    if (diff <= 0) {
+    if(diff <= 0){
         document.getElementById("countdown").innerHTML = "❤️ Wedding Day ❤️";
         return;
     }
-
-    let days = Math.floor(diff / (1000*60*60*24));
-    let hrs = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-    let mins = Math.floor((diff % (1000*60*60)) / (1000*60));
-
-    document.getElementById("countdown").innerHTML =
-        `${days} days ${hrs} hrs ${mins} mins`;
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hrs = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+    const secs = Math.floor((diff % (1000*60)) / 1000);
+    document.getElementById("countdown").innerHTML = `${days}d ${hrs}h ${mins}m ${secs}s`;
 }
 setInterval(updateCountdown, 1000);
+updateCountdown();
 
-/* ---------------------- GOOGLE CALENDAR --------------------- */
-function addToCalendar() {
-    let start = "20250115T053000Z";  
-    let end = "20250115T070000Z";    
-
-    const url =
-        "https://www.google.com/calendar/render?action=TEMPLATE" +
-        "&text=Linta+%26+Nijo+Wedding" +
-        "&dates=" + start + "/" + end +
-        "&details=Wedding+Ceremony" +
-        "&location=St.+Thomas+Marthoma+Church,+Vilangara";
-
+/* ---------- GOOGLE CALENDAR ---------- */
+document.getElementById("addCalBtn").onclick = function(){
+    const start = "20260115T053000Z";
+    const end = "20260115T070000Z";
+    const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=Linta+%26+Nijo+Wedding&dates=${start}/${end}&details=Wedding+Ceremony&location=St.+Thomas+Marthoma+Church,+Vilangara`;
     window.open(url, "_blank");
-}
+};
 
-/* ---------------------- SUBMIT RSVP --------------------- */
-function submitRSVP() {
+/* ---------- SHARE ---------- */
+document.getElementById("shareBtn").onclick = async function(){
+    const data = { title:"Wedding Invitation", text:"You're invited to Linta & Nijo's wedding!", url: location.href };
+    if(navigator.share){ await navigator.share(data).catch(()=>{}); }
+    else{ navigator.clipboard.writeText(location.href); alert("Link copied!"); }
+};
+
+/* ---------- RSVP ---------- */
+function submitRSVP(){
     const data = {
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
         status: document.getElementById("status").value,
         note: document.getElementById("note").value
     };
+    if(!data.name){ alert("Please enter your name."); return; }
 
-    fetch(SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then(() => {
-        alert("RSVP Submitted!");
-        loadGuests();
-    });
+    fetch(SCRIPT_URL,{
+        method:"POST",
+        body:JSON.stringify(data)
+    }).then(res=>res.json())
+      .then(()=>{ loadGuests(); alert("RSVP submitted!"); });
+
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("note").value = "";
+    document.getElementById("status").value = "Attending";
 }
 
-/* ---------------------- LOAD GUEST LIST --------------------- */
-function loadGuests() {
+/* ---------- LOAD GUEST LIST ---------- */
+function loadGuests(){
     fetch(SCRIPT_URL)
-        .then(res => res.json())
-        .then(list => {
-            let html = "";
-            list.forEach(g => {
+        .then(res=>res.json())
+        .then(list=>{
+            let html="";
+            list.forEach(g=>{
                 html += `<p>• <b>${g.name}</b> – ${g.status}</p>`;
             });
+            if(html==="") html="<p style='color:#888'>No responses yet.</p>";
             document.getElementById("guestList").innerHTML = html;
+        }).catch(e=>{
+            document.getElementById("guestList").innerHTML = "<p style='color:#888'>Failed to load guest list.</p>";
         });
 }
-
 loadGuests();
 </script>
 
 </body>
 </html>
+
 
 
 
