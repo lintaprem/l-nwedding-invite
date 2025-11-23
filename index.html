@@ -3,105 +3,186 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wedding RSVP</title>
+<title>Linta & Nijo Wedding Invitation</title>
 
 <style>
-    body {
-        font-family: "Poppins", sans-serif;
-        background: #f8f6f2;
-        padding: 20px;
-        text-align: center;
-        color: #333;
-    }
+  :root {
+    --accent: #b02e2e;
+    --muted: #6b6b6b;
+    --bg: #f8f6f3;
+  }
 
-    .card {
-        background: white;
-        padding: 20px;
-        border-radius: 18px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        margin-bottom: 25px;
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+  * { box-sizing: border-box; }
 
-    h2 {
-        margin-top: 0;
-        font-weight: 600;
-    }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Helvetica, Arial;
+    background: linear-gradient(180deg,#fff 0%,var(--bg) 100%);
+    color: #222;
+    line-height: 1.5;
+  }
 
-    #countdown {
-        font-size: 22px;
-        font-weight: 600;
-        color: #8b5e3c;
-        margin-top: 10px;
-    }
+  .container {
+    max-width: 920px;
+    margin: 36px auto;
+    padding: 24px;
+  }
 
-    input, select, textarea {
-        width: 90%;
-        padding: 10px;
-        margin-top: 10px;
-        border-radius: 8px;
-        border: 1px solid #bbb;
-    }
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(20,20,20,0.06);
+    overflow: hidden;
+    padding: 28px;
+    margin-bottom: 25px;
+  }
 
-    button {
-        padding: 12px 20px;
-        border: none;
-        background: #8b5e3c;
-        color: white;
-        border-radius: 10px;
-        margin-top: 15px;
-        font-size: 16px;
-        cursor: pointer;
-    }
+  .names {
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 700;
+    margin: 6px 0;
+    color: var(--accent);
+  }
 
-    #guestList {
-        margin-top: 15px;
-        text-align: left;
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-        background: #fff;
-        padding: 15px;
-        border-radius: 12px;
-        box-shadow: 0px 3px 8px rgba(0,0,0,0.1);
-        min-height: 50px;
-    }
+  .subtitle {
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  #countdown {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 10px 0 25px;
+  }
+
+  .details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .detail {
+    background: #fbfbfb;
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .ghost {
+    background: transparent;
+    border: 1px solid #ddd;
+    color: #333;
+  }
+
+  #guestList {
+    margin-top: 15px;
+    text-align: left;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0px 3px 8px rgba(0,0,0,0.1);
+    min-height: 50px;
+  }
+
+  input, select, textarea {
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #bbb;
+  }
+
+  button:hover {
+    opacity: 0.9;
+  }
+
+  @media(max-width:720px){
+    .details { grid-template-columns: 1fr; }
+  }
 </style>
-
 </head>
+
 <body>
 
-<div class="card">
-    <h2>Linta & Nijo Wedding</h2>
-    <div id="countdown">Loading…</div>
+<div class="container">
+  <div class="card">
+    <p style="margin:0;color:var(--muted)">With joy in our hearts</p>
+    <h1 class="names">Linta Premkumar & Nijo M. George</h1>
+    <p class="subtitle">Request the pleasure of your company as we exchange vows</p>
 
-    <button onclick="addToCalendar()">Add to Google Calendar</button>
+    <div id="countdown">Loading countdown...</div>
+
+    <div class="details">
+      <div class="detail">
+        <strong>Date & Time</strong>
+        <div>Thursday, 15 January 2026<br>11:00 AM IST</div>
+      </div>
+      <div class="detail">
+        <strong>Venue</strong>
+        <div>St. Thomas Marthoma Church, Vilangara, Kottarakkara</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px">
+      <strong>Contact</strong><br>
+      <span style="color:var(--muted)">
+        Roy: 9744836163<br>
+        Nijo: 8921077115<br>
+        Georgekutty: 9495475170
+      </span>
+    </div>
+
+    <div style="margin-top:18px">
+      <button class="btn" onclick="showRSVP()">RSVP</button>
+      <button class="btn ghost" onclick="addToCalendar()">Add to Calendar</button>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <h3>Guests Who Responded</h3>
+      <div id="guestList">Loading…</div>
+    </div>
+  </div>
 </div>
 
-<div class="card">
+<!-- RSVP Modal -->
+<div id="modal" style="display:none; position:fixed; inset:0; background: rgba(0,0,0,0.45); justify-content:center; align-items:center;">
+  <div class="card" style="max-width:500px; margin:auto;">
     <h3>RSVP</h3>
     <input type="text" id="name" placeholder="Your Name">
     <input type="email" id="email" placeholder="Your Email">
-    
     <select id="status">
-        <option value="Attending">Attending</option>
-        <option value="Not Attending">Not Attending</option>
+      <option value="Attending">Attending</option>
+      <option value="Not Attending">Not Attending</option>
     </select>
-
     <textarea id="note" placeholder="Message (Optional)"></textarea>
-
-    <button onclick="submitRSVP()">Submit RSVP</button>
+    <div>
+      <button onclick="submitRSVP()">Submit RSVP</button>
+      <button class="ghost" onclick="closeRSVP()">Cancel</button>
+    </div>
+  </div>
 </div>
-
-<h3>Guests Who Responded</h3>
-<div id="guestList">Loading…</div>
 
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPocYcNi0Bd1NeS7kbFJFUBBngKyNN133luAq2_XT0fDglpCtNTtjFnJ2b9u00O4_h/exec";
 
-/* ---------------------- COUNTDOWN --------------------- */
+/* COUNTDOWN */
 function updateCountdown() {
     const weddingDate = new Date("2026-01-15T11:00:00+05:30").getTime();
     const now = new Date().getTime();
@@ -112,33 +193,27 @@ function updateCountdown() {
         return;
     }
 
-    let days = Math.floor(diff / (1000*60*60*24));
-    let hrs = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-    let mins = Math.floor((diff % (1000*60*60)) / (1000*60));
-
-    document.getElementById("countdown").innerHTML =
-        `${days} days ${hrs} hrs ${mins} mins`;
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hrs = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+    document.getElementById("countdown").innerHTML = `${days} days ${hrs} hrs ${mins} mins`;
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-/* ---------------------- GOOGLE CALENDAR --------------------- */
+/* GOOGLE CALENDAR */
 function addToCalendar() {
-    // IST times
-    let start = "20260115T053000Z"; // 11:00 AM IST = 05:30 UTC
-    let end = "20260115T070000Z";   // 12:30 PM IST = 07:00 UTC
-
-    const url =
-        "https://www.google.com/calendar/render?action=TEMPLATE" +
-        "&text=Linta+%26+Nijo+Wedding" +
-        "&dates=" + start + "/" + end +
-        "&details=Wedding+Ceremony" +
-        "&location=St.+Thomas+Marthoma+Church,+Vilangara,+Kottarakkara";
-
+    const start = "20260115T053000Z"; // 11:00 IST in UTC
+    const end = "20260115T070000Z";   // 12:30 IST
+    const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=Linta+%26+Nijo+Wedding&dates=${start}/${end}&details=Wedding+Ceremony&location=St.+Thomas+Marthoma+Church,+Vilangara,+Kottarakkara`;
     window.open(url, "_blank");
 }
 
-/* ---------------------- SUBMIT RSVP --------------------- */
+/* RSVP Modal */
+function showRSVP(){ document.getElementById("modal").style.display="flex"; }
+function closeRSVP(){ document.getElementById("modal").style.display="none"; }
+
+/* SUBMIT RSVP */
 function submitRSVP() {
     const data = {
         name: document.getElementById("name").value.trim(),
@@ -147,10 +222,7 @@ function submitRSVP() {
         note: document.getElementById("note").value.trim()
     };
 
-    if(!data.name){
-        alert("Please enter your name!");
-        return;
-    }
+    if(!data.name){ alert("Please enter your name"); return; }
 
     fetch(SCRIPT_URL, {
         method: "POST",
@@ -159,37 +231,37 @@ function submitRSVP() {
     .then(res => res.json())
     .then(() => {
         alert("RSVP Submitted!");
+        closeRSVP();
         document.getElementById("name").value = "";
         document.getElementById("email").value = "";
         document.getElementById("note").value = "";
         loadGuests();
     })
-    .catch(err => alert("Error submitting RSVP."));
+    .catch(()=> alert("Error submitting RSVP"));
 }
 
-/* ---------------------- LOAD GUEST LIST --------------------- */
+/* LOAD GUEST LIST */
 function loadGuests() {
     fetch(SCRIPT_URL)
         .then(res => res.json())
         .then(list => {
-            if(!list || list.length === 0){
+            if(!list || list.length === 0) {
                 document.getElementById("guestList").innerHTML = "<p>No responses yet.</p>";
                 return;
             }
             let html = "";
-            list.forEach(g => {
-                html += `<p>• <b>${g.name}</b> – ${g.status}</p>`;
-            });
+            list.forEach(g => { html += `<p>• <b>${g.name}</b> – ${g.status}</p>`; });
             document.getElementById("guestList").innerHTML = html;
         })
-        .catch(() => document.getElementById("guestList").innerHTML = "<p>Unable to load guests.</p>");
+        .catch(()=> document.getElementById("guestList").innerHTML = "<p>Unable to load guests.</p>");
 }
-
 loadGuests();
 </script>
 
 </body>
 </html>
+
+
 
 
 
